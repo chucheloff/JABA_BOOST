@@ -18,3 +18,5 @@ you need node, npm and npx
 - to execute you need Android device connected with ADB ( emulator or hardware device ) 
 - then run automated tests from any test/specs/*.js files with
   'npx wdio wdio.conf.js --spec {name of your spec}' : in my examplle its 'npx wdio wdio.conf.js --spec boost'
+  
+  Runs on the opened chat page where you need to send reminder to
