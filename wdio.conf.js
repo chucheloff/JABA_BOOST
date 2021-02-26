@@ -12,14 +12,12 @@ exports.config = {
     maxInstances: 10,
     
     capabilities: [{
-        // "appPackage": "com.bet_planet.android.debug",
-        // "appActivity": "com.bet_planet.android.presentation.main.MainActivity",
         "platformName": "Android",
-        "deviceName" : "f05778b3"
+        // "deviceName" : "f05778b3"
     }],
     
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'debug',
+    logLevel: 'error',
     
     // If you only want to run your tests until a specific amount of tests have failed use
     // bail (default is 0 - don't bail, run all tests).

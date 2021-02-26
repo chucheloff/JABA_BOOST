@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@wdio/cli": "^7.0.7",
+    "@wdio/mocha-framework": "^7.0.7",
     "appium": "^1.20.2"
   },
   "devDependencies": {

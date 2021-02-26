@@ -1,10 +1,18 @@
-
+const COMMANDS = require('../consts/commands')
 class App{
+  //consts
   get DIRECTION_UP() {return 1}
   get DIRECTION_DOWN() {return -1}
   get DAY_BAR() {return 0}
   get HOUR_BAR() {return 1}
   get MINUTE_BAR() {return 2}
+  get COMMANDS() {return {
+    EAT:'',
+    WORK_1:'',
+    WORK_2:'',
+    WORK_3:'',
+
+  }}
 
   getCurrentDate(){
     let seekBar = $$('//android.widget.SeekBar')
@@ -23,13 +31,6 @@ class App{
               }
           },
           { action: "wait", options: { mseconds: 1000 } },
-          // {
-          //   action: "moveTo",
-          //   options: {
-          //     x: to.x,
-          //     y: to.y
-          //   }
-          // },
           { action: "release" }
           ]);
   
@@ -42,13 +43,6 @@ class App{
               }
           },
           { action: "wait", options: { mseconds: 200 } },
-          // {
-          //   action: "moveTo",
-          //   options: {
-          //     x: to.x,
-          //     y: to.y
-          //   }
-          // },
           { action: "release" }
           ]);
   }
@@ -92,16 +86,27 @@ class App{
     }
   }
 
-  setReminder(){
-    $$('//android.widget.Button')[0].click()
-  }
+    setReminder(day, offset){
+        this.setMessageText(COMMANDS.EAT)
+        this.openReminderWindow()
+        if ( parseInt($$('//android.widget.SeekBar')[1].getText().split(' ')[0]) + offset.hours > 24){
+            offset.days ++
+        }
+        this.setDateByOffset({
+            days:offset.days+day,
+            hours:offset.hours,
+            minutes:offset.minutes
+        })
+        $$('//android.widget.Button')[0].click()
+        return offset
+    }
 
-  setDateByOffset(offset){
-    this.swipeSeekbar(this.DAY_BAR, this.DIRECTION_DOWN, offset.days)
-    this.swipeSeekbar(this.HOUR_BAR, this.DIRECTION_DOWN, offset.hours)
-    this.swipeSeekbar(this.MINUTE_BAR, this.DIRECTION_DOWN, offset.minutes)
-  }
+
+    setDateByOffset(offset){
+        if (offset.days > 0){this.swipeSeekbar(this.DAY_BAR, this.DIRECTION_DOWN, offset.days)}
+        if (offset.hours > 0) {this.swipeSeekbar(this.HOUR_BAR, this.DIRECTION_DOWN, offset.hours)}
+        if (offset.minutes > 0) {this.swipeSeekbar(this.MINUTE_BAR, this.DIRECTION_DOWN, offset.minutes)}
+    }
   
-}
-    
+}   
     module.exports = new App()
