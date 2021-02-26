@@ -86,18 +86,28 @@ class App{
     }
   }
 
-    setReminder(day, offset){
+    setEatReminder(day, offset){
+      
         this.setMessageText(COMMANDS.EAT)
+
         this.openReminderWindow()
-        if ( parseInt($$('//android.widget.SeekBar')[1].getText().split(' ')[0]) + offset.hours > 24){
-            offset.days ++
+
+        if(offset.days + day == 0){
+          if (offset.hours == 12){
+            if( parseInt($$('//android.widget.SeekBar')[1].getText().split(' ')[0]) > 11 ){
+              driver.back()
+              return offset
+            }
+          }
         }
+        console.log([{days:offset.days + day, hours: offset.hours, minutes:offset.minutes}])
         this.setDateByOffset({
             days:offset.days+day,
             hours:offset.hours,
             minutes:offset.minutes
         })
         $$('//android.widget.Button')[0].click()
+        driver.back()
         return offset
     }
 

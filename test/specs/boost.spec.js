@@ -6,7 +6,7 @@ describe('LVL UP MY JABA', ()=>{
 
   //offset structure {days : x, hours : y, minutes: z}, 0 <= x < 364, 0 <= y < , 0 <= z < 59 - int
 
-  const daysToGenerate = 7
+  const daysToGenerate = 3
 
 
     it('EAT', ()=>{
@@ -16,10 +16,12 @@ describe('LVL UP MY JABA', ()=>{
             hours:0,
             minutes:0
         }
+
         for (let i = 0; i < daysToGenerate; i++){
-            offset = App.setReminder(i,offset)
+            offset = App.setEatReminder(i,offset)
             offset.hours += 12
-            offset = App.setReminder(i,offset)
+            offset = App.setEatReminder(i,offset)
+            offset.hours -= 12
         }
     })
 
