@@ -97,9 +97,9 @@ class App{
   }
 
   setDateByOffset(offset){
-    this.swipeSeekbar(this.DAY_BAR, DIRECTION_DOWN, offset.days)
-    this.swipeSeekbar(this.HOUR_BAR, DIRECTION_DOWN, offset.hours)
-    this.swipeSeekbar(this.MINUTE_BAR, DIRECTION_DOWN, offset.minutes)
+    this.swipeSeekbar(this.DAY_BAR, this.DIRECTION_DOWN, offset.days)
+    this.swipeSeekbar(this.HOUR_BAR, this.DIRECTION_DOWN, offset.hours)
+    this.swipeSeekbar(this.MINUTE_BAR, this.DIRECTION_DOWN, offset.minutes)
   }
   
 }
