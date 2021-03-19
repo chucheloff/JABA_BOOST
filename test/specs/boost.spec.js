@@ -4,7 +4,9 @@ const COMMANDS = require('../consts/commands')
 
 describe('LVL UP MY JABA', ()=>{
 
-  //offset structure {days : x, hours : y, minutes: z}, 0 <= x < 364, 0 <= y < , 0 <= z < 59 - int
+//   offset structure 
+//   {days : x, hours : y, minutes: z}
+//   0 <= x < 364, 0 <= y < , 0 <= z < 59 - all int
 
   const daysToGenerate = 3
 
@@ -33,8 +35,13 @@ describe('LVL UP MY JABA', ()=>{
         minutes: 0
     }
 
-    for (let day = 0; day < daysToGenerate; day++){
-        
+    while (offset.days < daysToGenerate){
+        offset = App.setWorkReminder(day, offset)
+        App.safeSumOffsets(offset, {days:0,hours:8,minutes:0})
+        offset = App.setWorkReminder(day, offset)
+        App.safeSumOffsets(offset, {days:0,hours:8,minutes:0})
+        offset = App.setWorkReminder(day, offset)
+        App.safeSumOffsets(offset, {days:0,hours:-16,minutes:0})
     }
 
   })

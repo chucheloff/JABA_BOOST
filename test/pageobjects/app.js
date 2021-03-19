@@ -1,7 +1,7 @@
 const COMMANDS = require('../consts/commands')
 class App{
   //consts
-  get SCHEDULE_BUTTON_OFFSET() {return 200} // change to your own experimentally determined value
+  get SCHEDULE_BUTTON_OFFSET() {return 50} // change to your own experimentally determined value
   get DIRECTION_UP() {return 1}
   get DIRECTION_DOWN() {return -1}
   get DAY_BAR() {return 0}
@@ -15,6 +15,29 @@ class App{
 
   }}
 
+//finish
+
+//   /**
+//    * Time in the app goes from 0 to 23
+//    * 
+//    * @param {offset} offset original changed offset
+//    * @param {offset} addOffset the offset being summed up to the original
+//    * @returns {offset} sum of two offsets fed into this f
+//    */
+//   safeSumOffsets(offset, addOffset){
+//       //scales infinetely, so we just add up
+//       offset.days += addOffset.days
+
+//     //first of all we check if we excceeded the day limits
+//     //hours offset goes from 0 to 23 
+//     if (offset.hours + addOffset.hours > 23){
+
+//     } else{
+//         offset.hours += addOffset.hours
+//     }
+//     return offset;
+//   }
+ 
   getCurrentDate(){
     let seekBar = $$('//android.widget.SeekBar')
     return {day:seekBar[0].getText(), hour:seekBar[1].getText(), minute:seekBar[2].getText()}
@@ -98,33 +121,93 @@ class App{
      */
     setEatReminder(day, offset){
 
-        this.setMessageText(COMMANDS.EAT)
+      this.setMessageText(COMMANDS.EAT)
 
-        this.openReminderWindow()
+      this.openReminderWindow()
 
-        if(offset.days + day == 0){
-          if (offset.hours == 12){
-            if( parseInt($$('//android.widget.SeekBar')[1].getText().split(' ')[0]) > 11 ){
-              driver.back()
-              return offset
-            }
+      if(offset.days + day == 0){
+        if (offset.hours == 12){
+          if( parseInt($$('//android.widget.SeekBar')[1].getText().split(' ')[0]) > 11 ){
+            driver.back()
+            return offset
           }
         }
-        console.log([{days:offset.days + day, hours: offset.hours, minutes:offset.minutes}])
-        this.setDateByOffset({
-            days:offset.days+day,
-            hours:offset.hours,
-            minutes:offset.minutes
-        })
-        $$('//android.widget.Button')[0].click()
-        driver.back()
-        return offset
+      }
+      console.log([{days:offset.days + day, hours: offset.hours, minutes:offset.minutes}])
+      this.setDateByOffset({
+          days:offset.days+day,
+          hours:offset.hours,
+          minutes:offset.minutes
+      })
+      $$('//android.widget.Button')[0].click()
+      driver.back()
+      return offset
     }
 
+    /**
+     * 
+     * @param {int} day days count to set offset by - basicly multiplying the hours manipulations
+     * @param {*} offset 
+     * @returns 
+     */
     setWorkReminder(day, offset){
+      //aks bout the specialists - might be ineffective, than its easily switched
+      this.setMessageText(COMMANDS.WORK[day%3])
+      this.openReminderWindow()
 
+      if(offset.days + day == 0){
+          if( parseInt($$('//android.widget.SeekBar')[1].getText().split(' ')[0]) > 24 - offset.hours ){
+            driver.back()
+            return offset
+          }
+      }
+      console.log([{days:offset.days + day, hours: offset.hours, minutes:offset.minutes}])
+      this.setDateByOffset({
+          days:offset.days+day,
+          hours:offset.hours,
+          minutes:offset.minutes
+      })
+      $$('//android.widget.Button')[0].click()
+      driver.back()
+
+      //now check to set the end of work reminder correctly
+      if (offset.hours < 21){
+        offset.hours += 2
+      }else{
+        offset.hours -=22
+        offset.days +=1
+      }
+      
+      return this.setEndOfWorkReminder(day, offset)
     }
 
+    /**
+     * 
+     * @param {*} day 
+     * @param {*} offset 
+     * @returns 
+     */
+    setEndOfWorkReminder(day, offset){
+      //aks bout the specialists - might be ineffective, than its easily switched
+      this.setMessageText(COMMANDS.END_WORK)
+      this.openReminderWindow()
+
+      if(offset.days + day == 0){
+        if( parseInt($$('//android.widget.SeekBar')[1].getText().split(' ')[0]) > 24 - offset.hours ){
+          driver.back()
+          return offset
+        }
+    }
+      console.log([{days:offset.days + day, hours: offset.hours, minutes:offset.minutes}])
+      this.setDateByOffset({
+          days:offset.days+day,
+          hours:offset.hours,
+          minutes:offset.minutes
+      })
+      $$('//android.widget.Button')[0].click()
+      driver.back()
+      return offset
+    }
 
     setDateByOffset(offset){
         if (offset.days > 0){this.swipeSeekbar(this.DAY_BAR, this.DIRECTION_DOWN, offset.days)}
