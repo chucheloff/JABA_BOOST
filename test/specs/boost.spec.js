@@ -9,31 +9,35 @@ describe('LVL UP MY JABA', ()=>{
   const daysToGenerate = 3
 
 
-    it('EAT', ()=>{
-        //for each day there are 2 eatigns 
-        let offset = {
-            days:0,
-            hours:0,
-            minutes:0
-        }
+    // it('EAT', ()=>{
+    //     //for each day there are 2 eatigns 
+    //     let offset = {
+    //         days:0,
+    //         hours:0,
+    //         minutes:0
+    //     }
 
-        for (let i = 0; i < daysToGenerate; i++){
-            offset = App.setEatReminder(i,offset)
-            offset.hours += 12
-            offset = App.setEatReminder(i,offset)
-            offset.hours -= 12
-        }
-    })
+    //     for (let day = 0; day < daysToGenerate; day++){
+    //         offset = App.setEatReminder(day,offset)
+    //         offset.hours += 12
+    //         offset = App.setEatReminder(day,offset)
+    //         offset.hours -= 12
+    //     }
+    // })
 
-//   it.skip('WORK', ()=>{
-//     //each day there are 
-//     for (let i = 0; i < daysToGenerate; i++){
-//       App.setMessageText(COMMANDS.WORK[randomInt(0,COMMANDS.WORK.length)])
-//       App.openReminderWindow()
-//       App.setDateByOffset({days:i,hours:0,minutes:0})
-//       App.setReminder()
-//     }
-//   })
+  it('WORK', ()=>{
+    //each day there are 
+    let offset = {
+        days: 0,
+        hours: 0,
+        minutes: 0
+    }
+
+    for (let day = 0; day < daysToGenerate; day++){
+        
+    }
+
+  })
 })
 
 function randomInt(min, max) {

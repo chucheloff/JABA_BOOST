@@ -54,9 +54,9 @@ class App{
   /**
    * Swipes given seekbar for 1 value in given direction
    *
-   * @param {int} seekBarType Index of wheel to rotate, 0 1 2 for date, hour, minute
+   * @param {int} seekIndex Index of wheel to rotate, 0 1 2 for date, hour, minute
    * @param {int} direction const for direction of turn
-   * @param {int} reps optional amount of repetiotions, default = 1
+   * @param {int} reps optional amount of repetitions, default = 1
    */
   swipeSeekbar(seekIndex, direction, reps = 1){
     let seekBar = $$('//android.widget.SeekBar')
@@ -87,6 +87,15 @@ class App{
     }
   }
 
+    /**
+     * This function makes all the under the hood work
+     *  to generate eating reminders just right
+     * 
+     * @param {int} day days counter to add to offset
+     * @param {offset} offset how far to move the reminder
+     * @returns {offset} returns modified due to internal math offset back,
+     *                    so it's prefferable to call this function updating offset passed to it
+     */
     setEatReminder(day, offset){
 
         this.setMessageText(COMMANDS.EAT)
@@ -110,6 +119,10 @@ class App{
         $$('//android.widget.Button')[0].click()
         driver.back()
         return offset
+    }
+
+    setWorkReminder(day, offset){
+
     }
 
 
